@@ -1,0 +1,43 @@
+{
+    "name": "Legendas Youtube",
+    "version": "1.0",
+    "description": "",
+    "author": "celraul",
+    "permissions": [
+        "declarativeContent",
+        "activeTab",
+        "notifications",
+        "storage",
+        "file://*/*",
+        "https://*/*",
+        "http://*/*"
+    ],
+    "options_page": "options.html",
+    "background": {
+        "scripts": [
+            "/js/jquery.min.js",
+            "/js/bootstrap.min.js",
+            "/js/main.js",
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "Title",
+        "default_icon": "images/favicon.png",
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "images/favicon.png"
+    },
+    "commands": {
+        "salvar-legenda": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+A",
+                "mac": "Command+Shift+A"
+            },
+            "description": "Copy phrases"
+        }
+    },
+    "manifest_version": 2
+}

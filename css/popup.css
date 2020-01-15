@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.actions {
+  margin-bottom: 10px;
+}
+
+.popup {
+  width: 290px;
+  height: 100px;
+  padding: 3px;
+}
+
+.popup button {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.container-phrases ul {
+  padding: 0;
+}
+
+.item-phrase {
+  display: inline-block;
+  width: 100%;
+  padding: 5px 0 0 5px;
+  margin-bottom: 5px;
+}
