@@ -1,6 +1,5 @@
 const selectors = {
     scriptCodeShowPhrases: `(function() {
-        
         var selector = document.getElementsByClassName("caption-visual-line");
         if(selector){
             var array = [];
@@ -50,7 +49,6 @@ function clearPhrasesStorage() {
 }
 
 function savePhrasesStorage(phrase) {
-
     chrome.storage.sync.get('youPhrases', function (data) {
 
         if (data.phrases) {
@@ -65,7 +63,6 @@ function savePhrasesStorage(phrase) {
 }
 
 function saveConfig() {
-
     const config = { capturaAutomatica: true };
     chrome.storage.sync.set({ configPlugin: config }, function () { });
 }

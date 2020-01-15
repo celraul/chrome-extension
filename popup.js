@@ -3,12 +3,14 @@ function showPhrasesButton(e) {
         {
             code: selectors.scriptCodeShowPhrases
         }, function (result) {
-            helper.addPhrasesOnList(result, true);
+            if (result) {
+                helper.addPhrasesOnList(result, true);
+            }
         });
 }
 
 function clearPhrasesButton() {
-    selectors.seletorListaLegendas.html("");
+    selectors.seletorListPhrases.html("");
     storage.clearPhrasesStorage();
 }
 
