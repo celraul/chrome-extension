@@ -31,10 +31,10 @@
         "16": "images/favicon.png"
     },
     "commands": {
-        "salvar-legenda": {
+        "save-phrase": {
             "suggested_key": {
-                "default": "Ctrl+Shift+A",
-                "mac": "Command+Shift+A"
+                "default": "Ctrl+Shift+E",
+                "mac": "Command+Shift+E"
             },
             "description": "Copy phrases"
         }

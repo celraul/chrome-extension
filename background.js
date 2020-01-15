@@ -1,16 +1,10 @@
 chrome.commands.onCommand.addListener(function (command) {
-
-  if (command == "salvar-legenda") {
-    // TODO criar alerta
+  if (command == "save-phrase") {
     chrome.tabs.executeScript(null,
       {
-        code: selectors.scriptCodeCapturarlegenda
+        code: selectors.scriptCodeShowPhrases
       }, function (result) {
-
         helper.addPhrasesOnList(result, true);
-        //chrome.browserAction.setBadgeText({ text: 'ON' });
-
       });
   }
-
 });
