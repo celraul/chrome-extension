@@ -3,17 +3,21 @@ const selectors = {
         var selector = document.getElementsByClassName("caption-visual-line");
         if(selector){
             var array = [];
+            var phrase = '';
+           
             for (var i = 0; i < selector.length; i++) {
                 var children = selector[i].children;
-    
                 if(children){
                     for (var j = 0; j < children.length; j++) {
                         if(children[j] && children[j].innerHTML)
-                            array.push(children[j].innerHTML);
+                            phrase += children[j].innerHTML; 
                     }
                 }
             }
 
+            if(phrase !== '')
+                array.push(phrase);
+    
             return array;
         }
 
@@ -27,7 +31,9 @@ function addPhrasesOnList(phrases, addStorage) {
         var concatPhrases = "";
         for (var i = 0; i < phrases.length; i++) {
             if (phrases[i]) {
-                selectors.seletorListPhrases.append(returnElementPhraseLine(phrases[i]));
+
+                var obj = createObjectPhrase(phrases[i]);
+                selectors.seletorListPhrases.append(returnElementPhraseLine(obj));
 
                 if (addStorage)
                     storage.savePhrasesStorage(phrases[i]);
@@ -37,22 +43,27 @@ function addPhrasesOnList(phrases, addStorage) {
         }
 
         copyToClipboard(concatPhrases);
-        showTranslate();
     }
 }
 
-function returnElementPhraseLine(phrase) {
-    return "<l1 class='item-phrase'><span class='text'>" +
-        phrase + "</span> <span class='icons'> <a title='Google Translate.'" + 'href="https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=' + phrase + '"' + " target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
-        "<a class='remove'> <i class='fa fa-trash-o' aria-hidden='true' title='Remove phrase.'></i> </a> </span> </li> </br> ";
+function guid() {
+    var chars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+    var str = "";
+    for (var i = 0; i < 36; i++) {
+        var str = str + ((i == 8 || i == 13 || i == 18 || i == 23) ? "-" : chars[Math.floor(Math.random() * chars.length)]);
+    };
+    return str;
 }
 
-function showTranslate() {
-    setTimeout(function () {
-        document.addEventListener('DOMContentLoaded', function () {
-            // TODO
-        });
-    }, 1000);
+function createObjectPhrase(phrase) {
+
+    return { id: guid(), phrase: phrase[0] };
+}
+
+function returnElementPhraseLine(obj) {
+    return "<l1 class='item-phrase' id='" + obj.id + "' > <span class='text'>" +
+        obj.phrase + "</span> <span class='icons'> <a title='Google Translate.'" + 'href="https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=' + obj.phrase + '"' + " target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
+        "<a class='remove'> <i class='fa fa-trash-o' aria-hidden='true' title='Remove phrase.'></i> </a> </span> </li> </br> ";
 }
 
 const helper = {
@@ -62,6 +73,7 @@ const helper = {
 const storage = {
     clearPhrasesStorage: clearPhrasesStorage,
     savePhrasesStorage: savePhrasesStorage,
+    removePhraseStorage: removePhraseStorage,
     saveConfig: saveConfig,
 };
 
@@ -78,6 +90,16 @@ function savePhrasesStorage(phrase) {
             var phrases = [];
             phrases.push(phrase);
             chrome.storage.sync.set({ youPhrases: phrases }, function () { });
+        }
+    });
+}
+
+function removePhraseStorage(phrase) {
+    chrome.storage.sync.get('youPhrases', function (data) {
+        if (data.youPhrases) {
+            var index = data.youPhrases.indexOf(phrase);
+            if (index !== -1)
+                data.youPhrases = data.youPhrases.splice(index, 1);
         }
     });
 }
