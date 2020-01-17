@@ -26,12 +26,12 @@ function addPhrasesOnList(phrases, addStorage) {
         var concatPhrases = "";
         for (var i = 0; i < phrases.length; i++) {
             if (phrases[i]) {
-                selectors.seletorListPhrases.append("<l1 class='item-phrase'>" + phrases[i] + "</li>");
-
-                concatPhrases += " " + phrases[i];
+                selectors.seletorListPhrases.append("<l1 class='item-phrase'>" + phrases[i] + "</li> </br> ");
 
                 if (addStorage)
                     storage.savePhrasesStorage(phrases[i]);
+
+                concatPhrases += " " + phrases[i];
             }
         }
 
@@ -56,9 +56,9 @@ function clearPhrasesStorage() {
 function savePhrasesStorage(phrase) {
     chrome.storage.sync.get('youPhrases', function (data) {
 
-        if (data.phrases) {
-            data.phrases.push(phrase);
-            chrome.storage.sync.set({ youPhrases: data.phrases }, function () { });
+        if (data.youPhrases) {
+            data.youPhrases.push(phrase);
+            chrome.storage.sync.set({ youPhrases: data.youPhrases }, function () { });
         } else {
             var phrases = [];
             phrases.push(phrase);
