@@ -8,7 +8,8 @@ const selectors = {
     
                 if(children){
                     for (var j = 0; j < children.length; j++) {
-                        array.push(children[j].innerHTML);
+                        if(children[j] && children[j].innerHTML)
+                            array.push(children[j].innerHTML);
                     }
                 }
             }
@@ -22,7 +23,7 @@ const selectors = {
 };
 
 function addPhrasesOnList(phrases, addStorage) {
-    if (phrases) {
+    if (phrases && phrases != "") {
         var concatPhrases = "";
         for (var i = 0; i < phrases.length; i++) {
             if (phrases[i]) {
