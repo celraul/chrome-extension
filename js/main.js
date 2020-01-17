@@ -43,7 +43,7 @@ function addPhrasesOnList(phrases, addStorage) {
 
 function returnElementPhraseLine(phrase) {
     return "<l1 class='item-phrase'><span class='text'>" +
-        phrase + "</span> <span class='icons'> <a title='Google Translate.' href='https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=" + phrase + "' target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
+        phrase + "</span> <span class='icons'> <a title='Google Translate.'" + 'href="https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=' + phrase + '"' + " target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
         "<a class='remove'> <i class='fa fa-trash-o' aria-hidden='true' title='Remove phrase.'></i> </a> </span> </li> </br> ";
 }
 
