@@ -27,7 +27,7 @@ function addPhrasesOnList(phrases, addStorage) {
         var concatPhrases = "";
         for (var i = 0; i < phrases.length; i++) {
             if (phrases[i]) {
-                selectors.seletorListPhrases.append("<l1 class='item-phrase'>" + phrases[i] + "</li> </br> ");
+                selectors.seletorListPhrases.append(returnElementPhraseLine(phrases[i]));
 
                 if (addStorage)
                     storage.savePhrasesStorage(phrases[i]);
@@ -37,7 +37,22 @@ function addPhrasesOnList(phrases, addStorage) {
         }
 
         copyToClipboard(concatPhrases);
+        showTranslate();
     }
+}
+
+function returnElementPhraseLine(phrase) {
+    return "<l1 class='item-phrase'><span class='text'>" +
+        phrase + "</span> <span class='icons'> <a title='Google Translate.' href='https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=" + phrase + "' target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
+        "<a class='remove'> <i class='fa fa-trash-o' aria-hidden='true' title='Remove phrase.'></i> </a> </span> </li> </br> ";
+}
+
+function showTranslate() {
+    setTimeout(function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            // TODO
+        });
+    }, 1000);
 }
 
 const helper = {
@@ -56,7 +71,6 @@ function clearPhrasesStorage() {
 
 function savePhrasesStorage(phrase) {
     chrome.storage.sync.get('youPhrases', function (data) {
-
         if (data.youPhrases) {
             data.youPhrases.push(phrase);
             chrome.storage.sync.set({ youPhrases: data.youPhrases }, function () { });

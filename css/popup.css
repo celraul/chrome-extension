@@ -8,7 +8,7 @@ body {
 }
 
 .popup {
-  width: 290px;
+  width: 350px;
   height: 100px;
   padding: 3px;
 }
@@ -27,4 +27,24 @@ body {
   width: 100%;
   padding: 5px 0 0 5px;
   margin-bottom: 5px;
+}
+
+.item-phrase > span.text {
+  width: 80%;
+  display: inline-block;
+}
+
+.item-phrase > span.icons {
+  display: flex;
+  float: right;
+}
+
+.item-phrase > span.icons > a > i {
+  font-size: 25px;
+  padding: 2px;
+  color: black;
+}
+
+i:hover {
+  cursor: pointer;
 }
