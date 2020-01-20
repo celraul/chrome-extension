@@ -2,9 +2,9 @@ chrome.commands.onCommand.addListener(function (command) {
   if (command == "save-phrase") {
     chrome.tabs.executeScript(null,
       {
-        code: selectors.scriptCodeShowPhrases
+        code: phraseAction.scriptGetPhrases
       }, function (result) {
-        helper.addPhrasesOnList(result, true);
+        phraseAction.addPhrasesOnList(result, true);
       });
   }
 });

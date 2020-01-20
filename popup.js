@@ -1,10 +1,17 @@
 function showPhrasesButton(e) {
     chrome.tabs.executeScript(null,
         {
-            code: selectors.scriptCodeShowPhrases
+            code: phraseAction.scriptGetPhrases
         }, function (result) {
             if (result) {
-                helper.addPhrasesOnList(result, true);
+                var concatPhrases = "";
+                for (let index = 0; index < result.length; index++) {
+                    var obj = phraseAction.createObjectPhrase(result[index]);
+                    concatPhrases += " " + obj.text;
+                    phraseAction.addPhraseOnList(obj, true);
+                }
+
+                phraseAction.copyToClipboard(concatPhrases);
             }
         });
 }
@@ -19,7 +26,8 @@ function setEventRemove() {
         var line = $(element.target).parents(':eq(2)');
         if (line) {
             line.remove();
-            storage.removePhraseStorage(line.text());
+            var id = $(element.target).parents(':eq(2)').prop("id");
+            storage.removePhraseStorage(id);
         }
     });
 }
@@ -31,8 +39,11 @@ function initPopup() {
     });
 
     chrome.storage.sync.get('youPhrases', function (data) {
-        if (data.youPhrases)
-            helper.addPhrasesOnList(data.youPhrases, false);
+        if (data.youPhrases) {
+            for (let index = 0; index < data.youPhrases.length; index++) {
+                phraseAction.addPhraseOnList(data.youPhrases[index], false);
+            }
+        }
 
         setTimeout(function () {
             setEventRemove();

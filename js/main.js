@@ -1,48 +1,13 @@
 const selectors = {
-    scriptCodeShowPhrases: `(function() {
-        var selector = document.getElementsByClassName("caption-visual-line");
-        if(selector){
-            var array = [];
-            var phrase = '';
-           
-            for (var i = 0; i < selector.length; i++) {
-                var children = selector[i].children;
-                if(children){
-                    for (var j = 0; j < children.length; j++) {
-                        if(children[j] && children[j].innerHTML)
-                            phrase += children[j].innerHTML; 
-                    }
-                }
-            }
-
-            if(phrase !== '')
-                array.push(phrase);
-    
-            return array;
-        }
-
-       return null;
-    })();`,
     seletorListPhrases: $('#list-phrases')
 };
 
-function addPhrasesOnList(phrases, addStorage) {
-    if (phrases && phrases != "") {
-        var concatPhrases = "";
-        for (var i = 0; i < phrases.length; i++) {
-            if (phrases[i]) {
+function addPhraseOnList(phrase, addStorage) {
+    if (phrase && phrase.text) {
+        selectors.seletorListPhrases.append(returnElementPhraseLine(phrase));
 
-                var obj = createObjectPhrase(phrases[i]);
-                selectors.seletorListPhrases.append(returnElementPhraseLine(obj));
-
-                if (addStorage)
-                    storage.savePhrasesStorage(phrases[i]);
-
-                concatPhrases += " " + phrases[i];
-            }
-        }
-
-        copyToClipboard(concatPhrases);
+        if (addStorage)
+            storage.savePhrasesStorage(phrase);
     }
 }
 
@@ -56,26 +21,14 @@ function guid() {
 }
 
 function createObjectPhrase(phrase) {
-
-    return { id: guid(), phrase: phrase[0] };
+    return { id: guid(), text: phrase[0] };
 }
 
 function returnElementPhraseLine(obj) {
     return "<l1 class='item-phrase' id='" + obj.id + "' > <span class='text'>" +
-        obj.phrase + "</span> <span class='icons'> <a title='Google Translate.'" + 'href="https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=' + obj.phrase + '"' + " target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
+        obj.text + "</span> <span class='icons'> <a title='Google Translate.'" + 'href="https://translate.google.com/#view=home&op=translate&sl=en&tl=pt&text=' + obj.text + '"' + " target='blank'><i class='fa fa-external-link-square' aria-hidden='true'></i> </a>" +
         "<a class='remove'> <i class='fa fa-trash-o' aria-hidden='true' title='Remove phrase.'></i> </a> </span> </li> </br> ";
 }
-
-const helper = {
-    addPhrasesOnList: addPhrasesOnList
-}
-
-const storage = {
-    clearPhrasesStorage: clearPhrasesStorage,
-    savePhrasesStorage: savePhrasesStorage,
-    removePhraseStorage: removePhraseStorage,
-    saveConfig: saveConfig,
-};
 
 function clearPhrasesStorage() {
     chrome.storage.sync.set({ youPhrases: [] }, function () { });
@@ -94,12 +47,17 @@ function savePhrasesStorage(phrase) {
     });
 }
 
-function removePhraseStorage(phrase) {
+function removePhraseStorage(phraseId) {
     chrome.storage.sync.get('youPhrases', function (data) {
         if (data.youPhrases) {
-            var index = data.youPhrases.indexOf(phrase);
-            if (index !== -1)
-                data.youPhrases = data.youPhrases.splice(index, 1);
+            for (let index = 0; index < data.youPhrases.length; index++) {
+                if (data.youPhrases[index].id == phraseId) {
+                    data.youPhrases.splice(index, 1);
+                    break;
+                }
+            }
+
+            chrome.storage.sync.set({ youPhrases: data.youPhrases }, function () { });
         }
     });
 }
@@ -136,3 +94,40 @@ const copyToClipboard = str => {
         }
     }
 };
+
+const storage = {
+    clearPhrasesStorage: clearPhrasesStorage,
+    savePhrasesStorage: savePhrasesStorage,
+    removePhraseStorage: removePhraseStorage,
+    saveConfig: saveConfig,
+};
+
+const phraseAction = {
+    addPhraseOnList: addPhraseOnList,
+    createObjectPhrase: createObjectPhrase,
+    copyToClipboard: copyToClipboard,
+    scriptGetPhrases: `(function() {
+        var selector = document.getElementsByClassName("caption-visual-line");
+        if(selector){
+            var array = [];
+            var phrase = '';
+           
+            for (var i = 0; i < selector.length; i++) {
+                var children = selector[i].children;
+                if(children){
+                    for (var j = 0; j < children.length; j++) {
+                        if(children[j] && children[j].innerHTML)
+                            phrase += children[j].innerHTML; 
+                    }
+                }
+            }
+
+            if(phrase !== '')
+                array.push(phrase);
+    
+            return array;
+        }
+
+       return null;
+    })();`,
+}
