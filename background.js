@@ -4,7 +4,7 @@ chrome.commands.onCommand.addListener(function (command) {
       {
         code: phraseAction.scriptGetPhrases
       }, function (result) {
-        phraseAction.addPhrasesOnList(result, true);
+        phraseAction.addPhrasesOnListByYoutubeLegends(result);
       });
   }
 });

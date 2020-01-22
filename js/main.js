@@ -1,6 +1,19 @@
-const selectors = {
-    seletorListPhrases: $('#list-phrases')
-};
+function createObjectPhrase(phrase) {
+    return { id: guid(), text: phrase[0] };
+}
+
+function addPhrasesOnListByYoutubeLegends(phrases){
+    if (phrases) {
+        var concatPhrases = "";
+        for (let index = 0; index < phrases.length; index++) {
+            var obj = createObjectPhrase(phrases[index]);
+            concatPhrases += " " + obj.text;
+            phraseAction.addPhraseOnList(obj, true);
+        }
+
+        phraseAction.copyToClipboard(concatPhrases);
+    }
+}
 
 function addPhraseOnList(phrase, addStorage) {
     if (phrase && phrase.text) {
@@ -18,10 +31,6 @@ function guid() {
         var str = str + ((i == 8 || i == 13 || i == 18 || i == 23) ? "-" : chars[Math.floor(Math.random() * chars.length)]);
     };
     return str;
-}
-
-function createObjectPhrase(phrase) {
-    return { id: guid(), text: phrase[0] };
 }
 
 function returnElementPhraseLine(obj) {
@@ -95,6 +104,10 @@ const copyToClipboard = str => {
     }
 };
 
+const selectors = {
+    seletorListPhrases: $('#list-phrases')
+};
+
 const storage = {
     clearPhrasesStorage: clearPhrasesStorage,
     savePhrasesStorage: savePhrasesStorage,
@@ -103,8 +116,8 @@ const storage = {
 };
 
 const phraseAction = {
+    addPhrasesOnListByYoutubeLegends: addPhrasesOnListByYoutubeLegends,
     addPhraseOnList: addPhraseOnList,
-    createObjectPhrase: createObjectPhrase,
     copyToClipboard: copyToClipboard,
     scriptGetPhrases: `(function() {
         var selector = document.getElementsByClassName("caption-visual-line");

@@ -3,16 +3,7 @@ function showPhrasesButton(e) {
         {
             code: phraseAction.scriptGetPhrases
         }, function (result) {
-            if (result) {
-                var concatPhrases = "";
-                for (let index = 0; index < result.length; index++) {
-                    var obj = phraseAction.createObjectPhrase(result[index]);
-                    concatPhrases += " " + obj.text;
-                    phraseAction.addPhraseOnList(obj, true);
-                }
-
-                phraseAction.copyToClipboard(concatPhrases);
-            }
+            phraseAction.addPhrasesOnListByYoutubeLegends(result);
         });
 }
 
