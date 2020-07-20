@@ -1,9 +1,9 @@
-function showPhrasesButton(e) {
+function copyPhraseButton(e) {
     chrome.tabs.executeScript(null,
-        {
-            code: phraseAction.scriptGetPhrases
-        }, function (result) {
-            phraseAction.addPhrasesOnListByYoutubeLegends(result);
+        { file: "js/execute-scripts/get-phrases.js" },
+        function (result) {
+            if (result)
+                phraseAction.addPhrasesOnListByYoutubeLegends(result[0]);
         });
 }
 
@@ -25,7 +25,7 @@ function setEventRemove() {
 
 function initPopup() {
     document.addEventListener('DOMContentLoaded', function () {
-        $('#showPhrasesButton').on("click", showPhrasesButton);
+        $('#copyPhraseButton').on("click", copyPhraseButton);
         $('#clearPhrasesButton').on("click", clearPhrasesButton);
     });
 

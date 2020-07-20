@@ -1,7 +1,7 @@
 {
-    "name": "Legendas Youtube",
+    "name": "Legendas",
     "version": "1.0",
-    "description": "",
+    "description": "Capturar legendas geradas automaticas do youtube",
     "author": "celraul",
     "permissions": [
         "declarativeContent",
@@ -24,7 +24,7 @@
     },
     "browser_action": {
         "default_title": "Title",
-        "default_icon": "images/favicon.png",
+        "default_icon": "images/icon.png",
         "default_popup": "popup.html"
     },
     "icons": {

@@ -1,6 +1,9 @@
 body {
-  margin: 0;
-  padding: 0;
+  margin     : 0;
+  padding    : 0;
+  font-family: Open Sans;
+  font-style : normal;
+  font-weight: normal;
 }
 
 .actions {
@@ -8,13 +11,13 @@ body {
 }
 
 .popup {
-  width: 350px;
-  height: 100px;
+  width  : 350px;
+  height : 100px;
   padding: 3px;
 }
 
 .popup button {
-  width: 100%;
+  width     : 100%;
   margin-top: 5px;
 }
 
@@ -23,29 +26,29 @@ body {
 }
 
 .item-phrase {
-  display: inline-block;
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 5px;
+  display: inline-table;
+  width  : 100%;
+  padding: 10px;
 }
+
 .item-phrase:hover {
   background: #f4f4f4;
 }
 
-.item-phrase > span.text {
-  width: 80%;
-  display: inline-block;
+.item-phrase>span.text {
+  width  : 80%;
+  display: table-cell;
 }
 
-.item-phrase > span.icons {
-  display: flex;
-  float: right;
+.item-phrase>span.icons {
+  display       : table-cell;
+  vertical-align: middle;
 }
 
-.item-phrase > span.icons > a > i {
+.item-phrase>span.icons>a>i {
   font-size: 25px;
-  padding: 2px;
-  color: black;
+  padding  : 2px;
+  color    : black;
 }
 
 i:hover {
