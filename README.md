@@ -1,5 +1,5 @@
 # chrome-extension
-chrome-extension to get youtube legends 
+chrome-extension to get youtube subtitles 
 
 
 
