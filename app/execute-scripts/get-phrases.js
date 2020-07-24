@@ -1,4 +1,4 @@
-stuff(function () {
+(function () {
     var selector = document.getElementsByClassName("caption-visual-line");
 
     if (selector) {

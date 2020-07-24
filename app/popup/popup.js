@@ -1,6 +1,6 @@
 function copyPhraseButton(e) {
     chrome.tabs.executeScript(null,
-        { file: "js/execute-scripts/get-phrases.js" },
+        { file: "app/execute-scripts/get-phrases.js" },
         function (result) {
             if (result)
                 phraseAction.addPhrasesOnListByYoutubeLegends(result[0]);

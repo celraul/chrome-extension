@@ -2,11 +2,11 @@ function createObjectPhrase(phrase) {
     return { id: guid(), text: phrase };
 }
 
-function addPhrasesOnListByYoutubeLegends(phrase) {
-    if (phrase) {
-        var obj = createObjectPhrase(phrase);
+function addPhrasesOnListByYoutubeLegends(text) {
+    if (text) {
+        var obj = createObjectPhrase(text);
         phraseAction.addPhraseOnList(obj, true);
-        phraseAction.copyToClipboard(phrase);
+        phraseAction.copyToClipboard(text);
     }
 }
 
@@ -15,6 +15,18 @@ function addPhraseOnList(phrase, addStorage) {
         selectors.seletorListPhrases.prepend(returnElementPhraseLine(phrase));
         if (addStorage)
             storage.savePhrasesStorage(phrase);
+
+        setEventRemove(phrase.id);
+    }
+}
+
+function setEventRemove(id) {
+    var selector = $("#" + id);
+    if (selector) {
+        selector.find('.remove').on("click", function (element) {
+            selector.remove();
+            storage.removePhraseStorage(id);
+        });
     }
 }
 
@@ -28,7 +40,6 @@ function guid() {
 }
 
 function returnElementPhraseLine(obj) {
-
     var li = `
     <l1 class='item-phrase' id='${obj.id}'> 
         <span class='text'>${obj.text} </span>
@@ -42,44 +53,6 @@ function returnElementPhraseLine(obj) {
     </br>`;
 
     return li;
-}
-
-function clearPhrasesStorage() {
-    chrome.storage.sync.set({ youPhrases: [] }, function () { });
-}
-
-function savePhrasesStorage(phrase) {
-    chrome.storage.sync.get('youPhrases', function (data) {
-        if (data.youPhrases) {
-            data.youPhrases.push(phrase);
-            chrome.storage.sync.set({ youPhrases: data.youPhrases }, function () { });
-        } else {
-            var phrases = [];
-            phrases.push(phrase);
-            chrome.storage.sync.set({ youPhrases: phrases }, function () { });
-        }
-    });
-}
-
-function removePhraseStorage(phraseId) {
-    chrome.storage.sync.get('youPhrases', function (data) {
-        if (data.youPhrases) {
-            for (let index = 0; index < data.youPhrases.length; index++) {
-                if (data.youPhrases[index].id == phraseId) {
-                    data.youPhrases.splice(index, 1);
-                    break;
-                }
-            }
-
-            chrome.storage.sync.set({ youPhrases: data.youPhrases }, function () { });
-        }
-    });
-}
-
-function configuracoesStorage() {
-    chrome.storage.sync.get('configPlugin', function (data) {
-        return data;
-    });
 }
 
 const copyToClipboard = str => {
@@ -106,12 +79,6 @@ const copyToClipboard = str => {
 
 const selectors = {
     seletorListPhrases: $('#list-phrases')
-};
-
-const storage = {
-    clearPhrasesStorage: clearPhrasesStorage,
-    savePhrasesStorage: savePhrasesStorage,
-    removePhraseStorage: removePhraseStorage
 };
 
 const phraseAction = {
